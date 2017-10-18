@@ -640,4 +640,13 @@
         <constructor-arg ref="changeEmailService"/>
         <property name="uaaUserDatabase" ref="userDatabase"/>
     </bean>
+
+    <bean id="userGoogleMfaCredentialsProvisioning" class="org.cloudfoundry.identity.uaa.mfa_provider.UserGoogleMfaCredentialsProvisioning">
+        <constructor-arg index="0" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="totpEndpoint" class="org.cloudfoundry.identity.uaa.login.TotpEndpoint">
+        <property name="userGoogleMfaCredentialsProvisioning" ref="userGoogleMfaCredentialsProvisioning"/>
+    </bean>
+
 </beans>
