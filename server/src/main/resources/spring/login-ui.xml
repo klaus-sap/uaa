@@ -292,7 +292,21 @@
           use-expressions="false"
           xmlns="http://www.springframework.org/schema/security">
         <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <csrf disabled="false"/>
+        <csrf disabled="false"
+              token-repository-ref="loginCookieCsrfRepository"
+                />
+        <access-denied-handler ref="loginEntryPoint"/>
+    </http>
+
+    <http name="totpSecurity"
+          pattern="/totp_qr_code**"
+          entry-point-ref="loginEntryPoint"
+          use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+        <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <csrf disabled="false"
+              token-repository-ref="loginCookieCsrfRepository"
+                />
         <access-denied-handler ref="loginEntryPoint"/>
     </http>
 

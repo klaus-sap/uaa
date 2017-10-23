@@ -23,7 +23,9 @@ public class UserGoogleMfaCredentialsProvisioning implements UserMfaCredentialsP
     private static final String CREATE_USER_MFA_CONFIG_SQL =
             "INSERT INTO " + TABLE_NAME + "(user_id, secret_key, validation_code, scratch_codes) VALUES (?,?,?,?)";
 
-    private static final String QUERY_USER_MFA_CONFIG_SQL = "SELECT * FROM " + TABLE_NAME + " WHERE user_id=?";
+    private static final String QUERY_USER_MFA_CONFIG_SQL = "SELECT * FROM " + TABLE_NAME + " WHERE user_id=? AND active=true";
+    private static final String QUERY_USER_MFA_CONFIG_INACTIVE_SQL = "SELECT * FROM " + TABLE_NAME + " WHERE user_id=? AND active=true";
+
     private static final String DELETE_USER_MFA_CONFIG_SQL = "DELETE FROM " + TABLE_NAME + " WHERE user_id=?";
 
     private  JdbcTemplate jdbcTemplate;
@@ -35,7 +37,7 @@ public class UserGoogleMfaCredentialsProvisioning implements UserMfaCredentialsP
 
     public boolean userCredentialExists(String userId) {
         try {
-            retrieve(userId);
+            retrieveActive(userId);
             return true;
         } catch (UserMfaConfigDoesNotExistException e) {
             return false;
@@ -76,6 +78,10 @@ public class UserGoogleMfaCredentialsProvisioning implements UserMfaCredentialsP
         } catch(EmptyResultDataAccessException e) {
             throw new UserMfaConfigDoesNotExistException("No Creds for user " +userId);
         }
+    }
+
+    public UserGoogleMfaCredentials retrieveActive(String userId) {
+        return null;
     }
 
     @Override

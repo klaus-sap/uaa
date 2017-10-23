@@ -15,7 +15,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layouts/main">
+      layout:decorator="layouts/pivotal-ui-main">
 <head>
     <th:block layout:include="nav :: head"></th:block>
 </head>
@@ -24,14 +24,11 @@
     <th:block layout:include="nav :: nav"></th:block>
 </div>
 <div class="island" layout:fragment="page-content">
-    <h1>Scan This for Two Factor Authentication</h1>
+    <h1>Google Authenticator Code</h1>
     <div class="island-content">
-        <br/>
-        <br/>
-        <br/>
         <form th:action="@{/totp_qr_code.do}" method="post" novalidate="novalidate">
             <div th:if="${error}" th:text="${error}" class="error-message"></div>
-            <input name="code" type="password" placeholder="Code" autofocus="autofocus" class="form-control"/>
+            <input name="code" type="text" placeholder="Code" autofocus="autofocus" class="form-control" maxlength="6"/>
             <input type="submit" value="Submit" class="forgot-password-button"/>
         </form>
     </div>

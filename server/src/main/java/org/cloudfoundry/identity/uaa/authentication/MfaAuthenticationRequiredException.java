@@ -1,4 +1,16 @@
-package org.cloudfoundry.identity.uaa.authentication.manager;
+package org.cloudfoundry.identity.uaa.authentication;
 
-public class MfaAuthenticationRequiredException {
+import org.springframework.security.core.AuthenticationException;
+
+public class MfaAuthenticationRequiredException extends AuthenticationException {
+    private final UaaAuthentication authentication;
+
+    public MfaAuthenticationRequiredException(UaaAuthentication authentication, String msg) {
+        super(msg);
+        this.authentication = authentication;
+    }
+
+    public UaaAuthentication getAuthentication() {
+        return authentication;
+    }
 }
